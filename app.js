@@ -17,6 +17,10 @@ app.use("/", express.static(__dirname + '/public'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+app.listen(PORT, function() {
+  console.log('Brew app is running on', PORT);
+});
+
 // app.use(session({
 //   secret: 'theTruthIsOutThere51',
 //   resave: false,
@@ -41,6 +45,14 @@ app.use(bodyParser.json());
 //   res.render('index', data);
 // });
 
-app.listen(PORT, function() {
-  console.log('Brew app is running on', PORT);
+app.get('/', function(req,res) {
+  res.render('index');
 });
+
+
+
+
+
+
+
+
