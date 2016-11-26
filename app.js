@@ -3,9 +3,11 @@ var app = express();
 var pgp = require('pg-promise')();
 var mustacheExpress = require('mustache-express');
 var bodyParser = require("body-parser");
+var methodOverride = require('method-override');
 // var session = require('express-session');
 var PORT = process.env.PORT || 3000;
 var db = pgp(process.env.DATABASE_URL || 'postgres://gbasgaard@localhost:5432/brew_db');
+var KEY = process.env.BREWERY_DB_API;
 
 /* BCrypt stuff here */
 var bcrypt = require('bcrypt');
@@ -47,6 +49,44 @@ app.listen(PORT, function() {
 
 app.get('/', function(req,res) {
   res.render('index');
+});
+
+app.get('/signup', function(req,res) {
+  res.render('signup/index')
+})
+
+app.post('/signup', function(req, res){
+  var data = req.body;
+  console.log(data);
+
+    db.none(
+      "INSERT INTO users (email, password_digest) VALUES ($1, $2)",
+      [data.email, data.password]
+    ).catch(function(user) {
+      res.send('Error.')
+    }).then(function(){
+      res.send('User created!');
+    })
+})
+
+app.post('/login', function(req, res){
+  var data = req.body;
+
+  db.one(
+    "SELECT * FROM users WHERE email = $1",
+    [data.email]
+  ).catch(function(){
+    res.send('Email/Password not found.')
+  }).then(function(user){
+    bcrypt.compare(data.password, user.password_digest, function(err, cmp){
+      if(cmp){
+        req.session.user = user;
+        res.redirect('/');
+      } else {
+        res.send('Email/Password not found.')
+      }
+    });
+  });
 });
 
 
