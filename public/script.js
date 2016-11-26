@@ -3,7 +3,7 @@ $(document).ready(function() {
   var getData = function(beerName) {
       return $.ajax({
         method: "GET",
-        url: "http://api.brewerydb.com/v2/beers?name=" + beerName + "&withBreweries=Y&key=DON'T FORGET TO PUT BACK KEY"
+        url: "http://api.brewerydb.com/v2/beers?name=" + beerName + "&withBreweries=Y&key=DON'T FORGET TO ADD KEY BACK"
       })
       .done(function(data) {
         console.log(data.data[0]);
@@ -24,9 +24,11 @@ $(document).ready(function() {
     var parseData = function(data) {
       var beer = data.data[0].name;
       var brewery = data.data[0].breweries[0].name
+      var label = data.data[0].labels.medium;
       // var name = data.name;
       // var temp = data.main.temp;
       $('#output').html(beer + " is brewed by " + brewery + ".")
+      $('#beer_img').attr("src", label)
     }
 
   // http://api.brewerydb.com/v2/beers?name=coors%20light&withBreweries=Y&key=7a86410c004fdf1aa75506fd5da627d0
