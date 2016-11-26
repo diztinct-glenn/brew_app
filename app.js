@@ -47,7 +47,7 @@ app.get("/", function(req, res){
 
 // Makes new account page
 app.get('/signup', function(req,res) {
-  res.render('signup/index')
+  res.render('signup')
 })
 
 // Adds new user info into users database
@@ -59,9 +59,9 @@ app.post('/signup', function(req, res){
       "INSERT INTO users (email, password_digest) VALUES ($1, $2)",
       [data.email, hash]
     ).catch(function(user) {
-      res.send('Error.')
+      res.send('Error. New user not created.')
     }).then(function(){
-      res.send('User created!');
+      res.send('New user created!');
     })
   })
 })
@@ -87,10 +87,20 @@ app.post('/login', function(req, res){
   });
 });
 
-// Makes Beer Search Page
+// Makes User's Saved Beers List
 app.get('/beers', function(req,res) {
-  res.render('beers')
+  res.render('beers');
+});
+
+// Makes Individual Beer Info Page
+app.get('/beers/:name', function(req,res) {
+  res.render('beer_info')
 })
+
+// Makes Beer Search Page
+app.get('/beers/search', function(req,res) {
+  res.render('search');
+});
 
 
 
