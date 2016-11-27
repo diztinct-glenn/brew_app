@@ -1,9 +1,10 @@
 $(document).ready(function() {
+  $('#radio_select').hide();
 
   var getData = function(beerName) {
       return $.ajax({
         method: "GET",
-        url: "http://api.brewerydb.com/v2/beers?name=" + beerName + "&withBreweries=Y&key=DON'T FORGET TO ADD KEY BACK"
+        url: "http://api.brewerydb.com/v2/beers?name=" + beerName + "&withBreweries=Y&key=DON'T FORGET TO ADD KEY"
       })
       .done(function(data) {
         console.log(data.data[0]);
@@ -29,8 +30,6 @@ $(document).ready(function() {
       // var temp = data.main.temp;
       $('#output').html(beer + " is brewed by " + brewery + ".")
       $('#beer_img').attr("src", label)
+      $('#radio_select').show();
     }
-
-  // http://api.brewerydb.com/v2/beers?name=coors%20light&withBreweries=Y&key=7a86410c004fdf1aa75506fd5da627d0
-
 })

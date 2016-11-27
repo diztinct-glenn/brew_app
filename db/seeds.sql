@@ -13,6 +13,8 @@ CREATE TABLE beers(
   brewery         VARCHAR(255) NOT NULL,
   img_url         VARCHAR(255) NOT NULL,
   description     TEXT         NOT NULL,
+  abv             INTEGER      NOT NULL,
+  ibu             INTEGER      NOT NULL,
   liked           BOOLEAN      NOT NULL,
   num_drinks      INTEGER      NOT NULL
 );

@@ -93,7 +93,7 @@ app.get('/beers', function(req,res) {
 });
 
 // Makes Individual Beer Info Page
-app.get('/beers/:name', function(req,res) {
+app.get('/beers/name', function(req,res) {
   res.render('beer_info')
 })
 

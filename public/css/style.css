@@ -10,7 +10,9 @@ body {
 h1 {
   text-align: center;
 }
+/*
+.center-block { float: none } */
 
-.center-block { float: none }
-
-
+#radio_pad {
+  width: 18%;
+}

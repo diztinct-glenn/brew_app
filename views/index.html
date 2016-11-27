@@ -1,8 +1,8 @@
 <!doctype html>
 <html>
   <head>
-    <link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-    <link href="/css/style.css" rel="stylesheet" type="text/css">
+    <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="css/style.css" rel="stylesheet" type="text/css">
   </head>
   <body>
     <div class="main-container">
@@ -10,7 +10,7 @@
         <h1>youBREW</h1>
         <br>
         {{#logged_in}}
-        <div class="col-lg-6 center-block">
+        <div class="col-lg-6">
           <div class="alert alert-dismissible alert-warning">
             <h4>Welcome {{email}}!</h4>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi aliquam tellus vitae nulla tristique, quis laoreet nulla fringilla.</p>
@@ -24,7 +24,7 @@
         </div>
         {{/logged_in}}
         {{^logged_in}}
-        <div class="col-lg-6 center-block">
+        <div class="col-lg-6">
           <div class="well bs-component">
             <form class="form-horizontal" action="/login" method="post">
               <fieldset>
