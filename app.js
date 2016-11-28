@@ -102,6 +102,21 @@ app.get('/beers/search', function(req,res) {
   res.render('search');
 });
 
+// Adds Beer Info into beers database
+app.post('/saveBeer', function(req,res) {
+  var data = req.body;
+  console.log(data);
+  // db.none(
+  //   'INSERT INTO beers (name, brewery, img_url, description, abv, ibu, liked, num_drinks) VALUES ($1, $2, $3, $4, $5)', [data.species, data.family, data.habitat, data.diet, data.planet]
+  // )
+  // .catch(function(user) {
+  //   res.send('Error.')
+  // })
+  // .then(function(user) {
+  //   res.send('Creature Created!')
+  // })
+})
+
 
 
 

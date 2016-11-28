@@ -1,5 +1,6 @@
 body {
-  background: gray;
+  background: url('../img/beer-background.jpg') no-repeat center center fixed;
+  background-size: cover;
 }
 
 .main-container {
@@ -7,12 +8,15 @@ body {
   margin: 0 auto;
 }
 
-h1 {
-  text-align: center;
-}
 /*
 .center-block { float: none } */
 
 #radio_pad {
   width: 18%;
+}
+
+.shadow_box {
+  background: rgba(0, 0, 0, .5);
+  color: white;
+  border-radius: 15px;
 }

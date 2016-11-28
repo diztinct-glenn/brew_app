@@ -9,7 +9,7 @@
 </head>
 <body>
   <div class="container">
-    <h1>youBREW</h1>
+    <h1 class='text-xs-center text-lg-center'>youBREW</h1>
     <h2>Beer Look Up Test:</h2>
 
     <div class='row'>
@@ -24,10 +24,13 @@
     <div class='row'>
       <h1 id='output'></h1>
       <img id='beer_img' class='img-fluid rounded mx-auto d-block'/>
+      <p id='description' class='text-xs-center text-lg-center'></p>
+        <p id='abv' class='text-xs-center text-lg-center'></p>
+        <p id='ibu' class='text-xs-center text-lg-center'></p>
     </div>
 
     <div id='radio_select' class='row'>
-      <form>
+      <form method='POST' action='/saveBeer'>
         <div id='radio_pad' class='form-group col-lg-4 row'>
           <fieldset class="mx-auto d-block">
           <div class="form-check-inline">
