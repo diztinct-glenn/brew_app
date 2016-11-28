@@ -16,6 +16,6 @@ CREATE TABLE beers(
   abv             INTEGER      NOT NULL,
   ibu             INTEGER      NOT NULL,
   liked           BOOLEAN      NOT NULL,
-  num_drinks      INTEGER      NOT NULL
+  user_id         INTEGER      REFERENCES users(id)
 );
 

@@ -92,6 +92,18 @@ app.get('/beers', function(req,res) {
   res.render('beers');
 });
 
+// Makes User's Liked Beers List
+app.get('/beers/liked', function(req,res) {
+  // Select from beers db WHERE user_id = user logged in AND liked = true
+  res.render('beers');
+});
+
+// Makes User's Liked Beers List
+app.get('/beers/disliked', function(req,res) {
+  // Select from beers db WHERE user_id = user logged in AND liked = false
+  res.render('beers');
+});
+
 // Makes Individual Beer Info Page
 app.get('/beers/name', function(req,res) {
   res.render('beer_info')
@@ -103,8 +115,11 @@ app.get('/beers/search', function(req,res) {
 });
 
 // Adds Beer Info into beers database
+//get the data from the saveBeer function on the front end
+//put it into the database with INSERT INTO
 app.post('/saveBeer', function(req,res) {
   var data = req.body;
+  //^^^ this is the data from the front end
   console.log(data);
   // db.none(
   //   'INSERT INTO beers (name, brewery, img_url, description, abv, ibu, liked, num_drinks) VALUES ($1, $2, $3, $4, $5)', [data.species, data.family, data.habitat, data.diet, data.planet]
@@ -113,7 +128,7 @@ app.post('/saveBeer', function(req,res) {
   //   res.send('Error.')
   // })
   // .then(function(user) {
-  //   res.send('Creature Created!')
+  //   res.send('Beer Saved!')
   // })
 })
 
