@@ -18,12 +18,14 @@ $(document).ready(function() {
         url: "/search/" +  beerName //pseuddo
       })
       .done(function(data) {
-        console.log(data)
+        // console.log(data)
         parseData(data);
-        // $('#save_beer').on('click', function(){
+        $('#save_beer').on('click', function(){
+          data.liked = $('input[name="liked"]:checked', '#liked_check').val();
+          console.log(data.liked)
           saveBeer(data)
-        //   // event.preventDefault();
-        // })
+          // event.preventDefault();
+        })
       })
     }
 
@@ -44,14 +46,16 @@ $(document).ready(function() {
     }
 
     var saveBeer = function(data){
-      console.log(data)
-      //make a post ajax request to /saveBeer
+
+      //make a post ajax request to /beers/search
+      var beers = {beers:data}
       $.ajax({
         method: "POST",
-        url: "/saveBeer"
+        url: "/beers/search",
+        data: beers
       })
       .done(function() {
+
       })
-      console.log(beerObject);
     }
 })

@@ -115,12 +115,13 @@ app.get('/beers/name', function(req,res) {
 // Adds Beer Info into beers database
 //get the data from the saveBeer function on the front end
 //put it into the database with INSERT INTO
-app.post('/saveBeer', function(req,res) {
+app.post('/beers/search', function(req,res) {
   var data = req.body;
   //^^^ this is the data from the front end
-  console.log(data);
+  console.log(data)
+  console.log(data.liked);
   // db.none(
-  //   'INSERT INTO beers (name, brewery, img_url, description, abv, ibu, liked) VALUES ($1, $2, $3, $4, $5)', [data.name, data.brewery, data.img_url, data.description, data.abv, data.ibu]
+  //   'INSERT INTO beers (name, brewery, img_url, description, abv, ibu, liked) VALUES ($1, $2, $3, $4, $5)', [data.name, data.brewery, data.img_url, data.description, data.abv, data.ibu, data.liked]
   // )
   // .catch(function(user) {
   //   res.send('Error.')
@@ -140,17 +141,11 @@ app.get('/search/:beer_name', function(req, res){
     var beer_name = req.params.beer_name;
     var api = 'http://api.brewerydb.com/v2/beers?name=' + beer_name + '&withBreweries=Y&key=' + KEY;
     request(api, function(err, resp, body){
-      console.log(body) // Logs JSON object from the external API of the specific beer I searched
+      // console.log(body) // Logs JSON object from the external API of the specific beer I searched
       body = JSON.parse(body);
       res.send(body) // sends json object back to front end
     })
   });
-
-// This is the server side:
-// /news is the page where the article actually appears.
-// /article saves the object returned from the request
-
-
 
 
 
