@@ -15,11 +15,13 @@
     <div class='row'>
       <form>
         <div class="form-group col-lg-4">
-          <input id="beer_entered" class="form-control" name="beer_name" type="text" placeholder="Beer Name">
+          <input id="search" class="form-control" name="name" type="text" placeholder="Beer Name">
         </div>
         <button id= "submit_button" type="submit" class="btn btn-primary">Submit</button>
       </form>
     </div>
+
+    <h1 id='tester'></h1>
 
     <div class='shadow_box'>
       <h1 id='output' class='text-xs-center text-lg-center'></h1>
@@ -35,11 +37,11 @@
           <fieldset class="mx-auto d-block">
           <div class="form-check-inline">
             <label class="form-check-label col-form-label">
-              <input type="radio" class="form-check-input mx-auto d-block" name="optionsRadios" id="optionsRadios1" value="option1">
+              <input type="radio" class="form-check-input mx-auto d-block" name="liked" id="optionsRadios1" value="true">
               Liked
             </label>
             <label class="form-check-label col-form-label">
-              <input type="radio" class="form-check-input mx-auto d-block" name="optionsRadios" id="optionsRadios2" value="option2">
+              <input type="radio" class="form-check-input mx-auto d-block" name="liked" id="optionsRadios2" value="false">
               Disliked
             </label>
           </div>

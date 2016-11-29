@@ -1,31 +1,33 @@
 $(document).ready(function() {
-  $('#radio_select').hide();
 
-  var getData = function(beerName) {
-      $.ajax({
-        method: "GET",
-        url: "http://api.brewerydb.com/v2/beers?name=" + beerName + "&withBreweries=Y&key="
-      })
-      .done(function(data) {
-        console.log(data.data[0]);
-        parseData(data);
-        $('#save_beer').on('click', function(){
-          saveBeer(data)
-          event.preventDefault();
-        })
-      })
-    }
-
-    var addAJAXFunction = function() {
+  var addAJAXFunction = function() {
       $('#submit_button').click(function(event){
-        var beerName = $('#beer_entered').val();
+        var beerName = $('#search').val();
         getData(beerName);
-        // console.log(beerName);
         event.preventDefault();
       })
     };
     addAJAXFunction();
 
+  // var beerName = $('#search').val();
+  // console.log(beerName)
+
+  var getData = function(beerName) {
+      $.ajax({
+        method: "GET",
+        url: "/search/" +  beerName //pseuddo
+      })
+      .done(function(data) {
+        console.log(data)
+        parseData(data);
+        // $('#save_beer').on('click', function(){
+          saveBeer(data)
+        //   // event.preventDefault();
+        // })
+      })
+    }
+
+    $('#radio_select').hide();
     var parseData = function(data) {
       var beer = data.data[0].name;
       var brewery = data.data[0].breweries[0].name
@@ -40,27 +42,16 @@ $(document).ready(function() {
       $('#ibu').html('IBU: ' + ibu);
       $('#radio_select').show();
     }
-})
 
     var saveBeer = function(data){
-      //make the json object from your data
-      var beerObject = {
-        "name": data.data[0].name,
-        "brewery": data.data[0].breweries[0].name,
-        "img_url": data.data[0].labels.medium,
-        "description": data.data[0].description,
-        "abv": Number(data.data[0].abv),
-        "ibu": Number(data.data[0].ibu)
-      }
+      console.log(data)
       //make a post ajax request to /saveBeer
       $.ajax({
         method: "POST",
         url: "/saveBeer"
       })
-      .done(function(beerObject) {
-
+      .done(function() {
       })
-
       console.log(beerObject);
-
     }
+})

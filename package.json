@@ -28,6 +28,7 @@
     "method-override": "^2.3.7",
     "mustache-express": "^1.2.2",
     "nodemon": "^1.11.0",
-    "pg-promise": "^5.4.3"
+    "pg-promise": "^5.4.3",
+    "request": "^2.79.0"
   }
 }
