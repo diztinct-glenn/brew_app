@@ -91,19 +91,31 @@ app.post('/login', function(req, res){
 
 // Makes User's Saved Beers List
 app.get('/beers', function(req,res) {
-  res.render('beers');
+  db.many(
+    "SELECT * FROM beers"
+  ).then(function(data) {
+    res.render('beers', {"beers": data});
+  })
 });
 
 // Makes User's Liked Beers List
 app.get('/beers/liked', function(req,res) {
   // Select from beers db WHERE user_id = user logged in AND liked = true
-  res.render('beers');
+  db.many(
+    "SELECT * FROM beers WHERE liked = 'true'"
+  ).then(function(data) {
+    res.render('specific_beers', {"beers": data});
+  })
 });
 
 // Makes User's Liked Beers List
 app.get('/beers/disliked', function(req,res) {
   // Select from beers db WHERE user_id = user logged in AND liked = false
-  res.render('beers');
+  db.many(
+    "SELECT * FROM beers WHERE liked = 'false'"
+  ).then(function(data) {
+    res.render('specific_beers', {"beers": data});
+  })
 });
 
 // Makes Individual Beer Info Page
@@ -118,21 +130,28 @@ app.get('/beers/name', function(req,res) {
 //put it into the database with INSERT INTO
 app.post('/beers/search', function(req,res) {
   var data = req.body;
-  // var json = data;
-  // JSON.parse(json);
-  //^^^ this is the data from the front end
-  console.log(data)
-  console.log(data.name);
 
-  // db.none(
-  //   'INSERT INTO beers (name, brewery, img_url, description, abv, ibu, liked) VALUES ($1, $2, $3, $4, $5)', [data.name, data.brewery, data.img_url, data.description, data.abv, data.ibu, data.liked]
-  // )
-  // .catch(function(user) {
-  //   res.send('Error.')
-  // })
-  // .then(function(user) {
-  //   res.send('Beer Saved!')
-  // })
+  //^^^ this is the data from the front end
+  // console.log(data.name);
+  // console.log(data.brewery);
+  // console.log(data.description)
+  // console.log(data.liked)
+  // res.send(data.liked)
+  // data.abv = Number(data.abv)
+  console.log(data.liked);
+  // data.abv = Number(data.abv)
+  // console.log(typeof(data.abv))
+
+
+  db.none(
+    'INSERT INTO beers (name, brewery, img_url, description, abv, liked) VALUES ($1, $2, $3, $4, $5, $6)', [data.name, data.brewery, data.img_url, data.description, data.abv, data.liked]
+  )
+  .catch(function() {
+    res.send('Error.')
+  })
+  .then(function() {
+    res.send('Beer Saved!')
+  })
 })
 
 // Makes Beer Search Page

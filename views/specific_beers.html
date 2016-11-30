@@ -2,9 +2,9 @@
 <html>
 <head>
   <title></title>
-  <link href="css/normalize.css" rel="stylesheet" type="text/css">
-  <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
-  <link href="css/style.css" rel="stylesheet" type="text/css">
+  <link href="../css/normalize.css" rel="stylesheet" type="text/css">
+  <link href="../css/bootstrap.min.css" rel="stylesheet" type="text/css">
+  <link href="../css/style.css" rel="stylesheet" type="text/css">
 </head>
 <body>
   <div class="main-container">
@@ -34,10 +34,10 @@
         <img src="img/255x255.png" class='img-fluid rounded mx-auto d-block'>
         <p class='text-xs-center text-lg-center'>BEER INFO GO HERE</p> -->
         {{#beers}}
-          <img src="{{img_url}}" class="img-fluid rounded mx-auto d-block">
+          <img src="{{img_url}}" alt="">
           <p>{{name}}</p>
           <p>{{description}}</p>
-          <p>ABV: {{abv}}%</p>
+          <p>{{abv}}</p>
         {{/beers}}
       </div>
       <div class="col-lg-5">
@@ -60,6 +60,6 @@
       </div>
   </div>
 </body>
-<script type="text/javascript" src="js/jquery.js"></script>
-<script type="text/javascript" src="js/script.js"></script>
+<script type="text/javascript" src="../js/jquery.js"></script>
+<script type="text/javascript" src="../js/script.js"></script>
 </html>
