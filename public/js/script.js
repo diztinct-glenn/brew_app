@@ -9,21 +9,26 @@ $(document).ready(function() {
     };
     addAJAXFunction();
 
-  // var beerName = $('#search').val();
-  // console.log(beerName)
-
   var getData = function(beerName) {
       $.ajax({
         method: "GET",
         url: "/search/" +  beerName //pseuddo
       })
       .done(function(data) {
-        // console.log(data)
+        console.log(data)
         parseData(data);
         $('#save_beer').on('click', function(){
           data.liked = $('input[name="liked"]:checked', '#liked_check').val();
-          console.log(data.liked)
-          saveBeer(data)
+
+          // MAKE A NORMAL OBJECT CALLED THE BEER HOUSING ALL THIS INFO BELOW and pass that back instead
+          data.name = data.data[0].name;
+          data.brewery = data.data[0].breweries[0].name;
+          data.img_url = data.data[0].labels.medium;
+          data.description = data.data[0].description;
+          data.abv = Number(data.data[0].abv);
+          console.log(data.liked, data.name, data.brewery, data.img_url, data.description, data.abv)
+          // console.log(data.name)
+          saveBeer(data);
           // event.preventDefault();
         })
       })
@@ -36,12 +41,10 @@ $(document).ready(function() {
       var img_url = data.data[0].labels.medium;
       var description = data.data[0].description;
       var abv = Number(data.data[0].abv);
-      var ibu = Number(data.data[0].ibu);
       $('#output').html(beer + " is brewed by " + brewery + ".");
       $('#beer_img').attr("src", img_url);
       $('#description').html(description);
       $('#abv').html('ABV: ' + abv + '%');
-      $('#ibu').html('IBU: ' + ibu);
       $('#radio_select').show();
     }
 
@@ -54,8 +57,8 @@ $(document).ready(function() {
         url: "/beers/search",
         data: beers
       })
-      .done(function() {
-
+      .done(function(data) {
+        console.log(data)
       })
     }
 })

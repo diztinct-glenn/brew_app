@@ -1,5 +1,5 @@
 DROP TABLE IF EXISTS users;
-DROP TABLE IF EXISTS beer;
+DROP TABLE IF EXISTS beers;
 
 CREATE TABLE users (
   id              SERIAL       PRIMARY KEY,
@@ -14,8 +14,7 @@ CREATE TABLE beers(
   img_url         VARCHAR(255) NOT NULL,
   description     TEXT         NOT NULL,
   abv             INTEGER      NOT NULL,
-  ibu             INTEGER      NOT NULL,
-  liked           BOOLEAN      NOT NULL,
-  user_id         INTEGER      REFERENCES users(id)
+  liked           VARCHAR(5)   NOT NULL
+  -- user_id         INTEGER      REFERENCES users(id)
 );
 

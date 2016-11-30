@@ -6,6 +6,7 @@ var mustacheExpress = require('mustache-express');
 var bodyParser = require("body-parser");
 var methodOverride = require('method-override');
 var session = require('express-session');
+var parseJson = require('parse-json');
 var request = require('request');
 var PORT = process.env.PORT || 3000;
 var db = pgp(process.env.DATABASE_URL || 'postgres://gbasgaard@localhost:5432/brew_db');
@@ -117,9 +118,12 @@ app.get('/beers/name', function(req,res) {
 //put it into the database with INSERT INTO
 app.post('/beers/search', function(req,res) {
   var data = req.body;
+  // var json = data;
+  // JSON.parse(json);
   //^^^ this is the data from the front end
   console.log(data)
-  console.log(data.liked);
+  console.log(data.name);
+
   // db.none(
   //   'INSERT INTO beers (name, brewery, img_url, description, abv, ibu, liked) VALUES ($1, $2, $3, $4, $5)', [data.name, data.brewery, data.img_url, data.description, data.abv, data.ibu, data.liked]
   // )
