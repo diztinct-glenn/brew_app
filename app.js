@@ -245,36 +245,3 @@ app.delete('/delete/:id', function(req,res) {
   db.none("DELETE FROM beers WHERE id = $1", [req.params.id])
   res.redirect('/beers')
 })
-
-
-
-
-//  db.none("UPDATE users SET name=$1, email=$2, password=$3 WHERE id=$4",
-//     [user.name,user.email,user.password,id])
-
-//   res.redirect('/users/'+id);
-// });
-
-// //show the view to make a new user.
-// app.get('/create',function(req,res){
-//   res.render('create')
-// })
-
-// //create a new user.
-// app.post('/users',function(req, res){
-//   user = req.body
-
-//   db.none('INSERT INTO users (name,email,password) VALUES ($1,$2,$3)',
-//     [user.name,user.email,user.password])
-
-//   res.render('index')
-// });
-
-// //delete a single user.
-// app.delete('/users/:id',function(req, res){
-//   id = req.params.id
-//   db.none("DELETE FROM users WHERE id=$1", [id])
-//   res.render('index')
-// });
-
-

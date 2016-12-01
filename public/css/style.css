@@ -1,6 +1,12 @@
 body {
-  background: url('../img/beer-background.jpg') no-repeat center center fixed;
+  background:
+    linear-gradient(
+      rgba(0, 0, 0, 0.45),
+      rgba(0, 0, 0, 0.45)
+    ),
+  url('../img/beer-background.jpg') no-repeat center center fixed;
   background-size: cover;
+  color: #fff;
 }
 
 .main-container {
@@ -19,4 +25,5 @@ body {
   background: rgba(0, 0, 0, .5);
   color: white;
   border-radius: 15px;
+  /* padding: 5px; */
 }
