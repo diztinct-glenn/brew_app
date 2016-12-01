@@ -17,6 +17,7 @@ app.engine('html', mustacheExpress());
 app.set('view engine', 'html');
 app.set('views', __dirname + '/views');
 app.use("/", express.static(__dirname + '/public'));
+app.use(methodOverride('_method'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
@@ -65,7 +66,7 @@ app.post('/signup', function(req, res){
     ).catch(function(user) {
       res.send('Error. New user not created.')
     }).then(function(){
-      res.send('New user created!');
+      res.redirect('/');
     })
   })
 })
@@ -83,33 +84,19 @@ app.post('/login', function(req, res){
     bcrypt.compare(data.password, user.password_digest, function(err, cmp){
       if(cmp){
         req.session.user = user;
-        res.redirect('/beers/search ');
+        res.redirect('/');
       } else {
         res.send('Email/Password not found.')
       }
     });
   });
 });
-// // Logs current user out
-// app.post('/logout', function(req, res){
-//   var data = req.body;
-//   console.log(data)
-//   db.one(
-//     "SELECT * FROM users WHERE email = $1",
-//     [data.email]
-//   ).catch(function(){
-//     res.send('Email/Password not found.')
-//   }).then(function(user){
-//     bcrypt.compare(data.password, user.password_digest, function(err, cmp){
-//       if(cmp){
-//         req.session.user = user;
-//         res.redirect('/');
-//       } else {
-//         res.send('Email/Password not found.')
-//       }
-//     });
-//   });
-// });
+// Logs current user out
+app.get('/logout', function(req,res){
+ console.log('in get /logout');
+ req.session.user = null;
+ res.redirect('/')
+})
 
 // Makes User's Saved Beers List
 app.get('/beers', function(req,res) {
@@ -122,7 +109,7 @@ app.get('/beers', function(req,res) {
    userId = req.session.user.id;
   }
 
-  db.many(
+  db.any(
     "SELECT * FROM beers WHERE user_id = $1", [userId]
   ).then(function(data) {
     res.render('beers', {"beers": data});
@@ -140,10 +127,10 @@ app.get('/beers/liked', function(req,res) {
    userId = req.session.user.id;
   }
   // Select from beers db WHERE user_id = user logged in AND liked = true
-  db.many(
+  db.any(
     "SELECT * FROM beers WHERE user_id = $1 AND liked = 'true'", [userId]
   ).then(function(data) {
-    res.render('specific_beers', {"beers": data});
+    res.render('liked_beers', {"beers": data});
   })
 });
 
@@ -158,10 +145,10 @@ app.get('/beers/disliked', function(req,res) {
    userId = req.session.user.id;
   }
   // Select from beers db WHERE user_id = user logged in AND liked = false
-  db.many(
+  db.any(
     "SELECT * FROM beers WHERE user_id = $1 AND liked = 'false'", [userId]
   ).then(function(data) {
-    res.render('specific_beers', {"beers": data});
+    res.render('disliked_beers', {"beers": data});
   })
 });
 
@@ -213,5 +200,81 @@ app.get('/search/:beer_name', function(req, res){
     })
   });
 
+// Update liked beer to disliked beer in database
+app.put('/update/liked/:id', function(req,res) {
+  var userId;
+  var logged_in;
+  var email;
+  if (req.session.user) {
+   logged_in = true;
+   email = req.session.user.email;
+   userId = req.session.user.id;
+  }
+
+  db.none("UPDATE beers SET liked = 'false' WHERE id = $1", [req.params.id])
+  res.redirect('/beers/liked')
+})
+// Update disliked beer to liked beer in database
+app.put('/update/disliked/:id', function(req,res) {
+  var userId;
+  var logged_in;
+  var email;
+  if (req.session.user) {
+   logged_in = true;
+   email = req.session.user.email;
+   userId = req.session.user.id;
+  }
+
+  db.none("UPDATE beers SET liked = 'true' WHERE id = $1", [req.params.id])
+  res.redirect('/beers/disliked')
+})
+
+
+// Delete beer from database
+app.delete('/delete/:id', function(req,res) {
+  console.log(req.params)
+  var userId;
+  var logged_in;
+  var email;
+  if (req.session.user) {
+   logged_in = true;
+   email = req.session.user.email;
+   userId = req.session.user.id;
+  }
+
+  db.none("DELETE FROM beers WHERE id = $1", [req.params.id])
+  res.redirect('/beers')
+})
+
+
+
+
+//  db.none("UPDATE users SET name=$1, email=$2, password=$3 WHERE id=$4",
+//     [user.name,user.email,user.password,id])
+
+//   res.redirect('/users/'+id);
+// });
+
+// //show the view to make a new user.
+// app.get('/create',function(req,res){
+//   res.render('create')
+// })
+
+// //create a new user.
+// app.post('/users',function(req, res){
+//   user = req.body
+
+//   db.none('INSERT INTO users (name,email,password) VALUES ($1,$2,$3)',
+//     [user.name,user.email,user.password])
+
+//   res.render('index')
+// });
+
+// //delete a single user.
+// app.delete('/users/:id',function(req, res){
+//   id = req.params.id
+//   db.none("DELETE FROM users WHERE id=$1", [id])
+//   res.render('index')
+// });
 
 
