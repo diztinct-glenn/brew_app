@@ -17,29 +17,29 @@
       </div>
 
       <div class="col-lg-8 shadow_box">
-        <!-- <img src="img/255x255.png" class='img-fluid rounded mx-auto d-block'>
-        <p class='text-xs-center text-lg-center'>BEER INFO GO HERE</p>
-        <img src="img/255x255.png" class='img-fluid rounded mx-auto d-block'>
-        <p class='text-xs-center text-lg-center'>BEER INFO GO HERE</p>
-        <img src="img/255x255.png" class='img-fluid rounded mx-auto d-block'>
-        <p class='text-xs-center text-lg-center'>BEER INFO GO HERE</p>
-        <img src="img/255x255.png" class='img-fluid rounded mx-auto d-block'>
-        <p class='text-xs-center text-lg-center'>BEER INFO GO HERE</p>
-        <img src="img/255x255.png" class='img-fluid rounded mx-auto d-block'>
-        <p class='text-xs-center text-lg-center'>BEER INFO GO HERE</p>
-        <img src="img/255x255.png" class='img-fluid rounded mx-auto d-block'>
-        <p class='text-xs-center text-lg-center'>BEER INFO GO HERE</p>
-        <img src="img/255x255.png" class='img-fluid rounded mx-auto d-block'>
-        <p class='text-xs-center text-lg-center'>BEER INFO GO HERE</p>
-        <img src="img/255x255.png" class='img-fluid rounded mx-auto d-block'>
-        <p class='text-xs-center text-lg-center'>BEER INFO GO HERE</p> -->
         {{#beers}}
-          <img src="{{img_url}}" alt="">
+          <img src="{{img_url}}" class="img-fluid rounded mx-auto d-block">
           <p>{{name}}</p>
           <p>{{description}}</p>
-          <p>{{abv}}</p>
+          <p>ABV: {{abv}}%</p>
+          <!-- <p>Had a change of heart? <a class='d-inline' href="" title="">Switch my taste</a></p> -->
+          <form method="POST" action="/update/disliked/{{id}}?_method=PUT">
+            <input name="id" type="hidden" value="{{id}}">
+          </form>
+          <form method="POST" action="/delete/{{id}}?_method=DELETE">
+             <input name="id" type="hidden" value={{id}}>
+             <button type="submit" value="submit" class="btn btn-default btn-lg">Delete</button>
+          </form>
         {{/beers}}
       </div>
+
+        <!-- <form method="POST" action="/delete/{{id}}?_method=DELETE">
+         <input name="id" type="hidden" value={{id}}>
+         <button type="submit" value="submit" class="btn btn-default btn-lg">
+         <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+         </button>
+        </form> -->
+
       <div class="col-lg-5">
         <!-- <img src="img/255x255.png" class='img-fluid rounded mx-auto d-block'>
         <p class='text-xs-center text-lg-center'>BEER INFO GO HERE</p>
