@@ -83,7 +83,7 @@ app.post('/login', function(req, res){
     bcrypt.compare(data.password, user.password_digest, function(err, cmp){
       if(cmp){
         req.session.user = user;
-        res.redirect('/beers');
+        res.redirect('/beers/search ');
       } else {
         res.send('Email/Password not found.')
       }
@@ -103,7 +103,7 @@ app.post('/login', function(req, res){
 //     bcrypt.compare(data.password, user.password_digest, function(err, cmp){
 //       if(cmp){
 //         req.session.user = user;
-//         res.redirect('/beers');
+//         res.redirect('/');
 //       } else {
 //         res.send('Email/Password not found.')
 //       }
@@ -113,18 +113,35 @@ app.post('/login', function(req, res){
 
 // Makes User's Saved Beers List
 app.get('/beers', function(req,res) {
-  // db.many(
-  //   "SELECT * FROM beers WHERE user_id = $1", [userId]
-  // ).then(function(data) {
-    res.render('beers');
-  // })
+  var userId;
+  var logged_in;
+  var email;
+  if (req.session.user) {
+   logged_in = true;
+   email = req.session.user.email;
+   userId = req.session.user.id;
+  }
+
+  db.many(
+    "SELECT * FROM beers WHERE user_id = $1", [userId]
+  ).then(function(data) {
+    res.render('beers', {"beers": data});
+  })
 });
 
 // Makes User's Liked Beers List
 app.get('/beers/liked', function(req,res) {
+  var userId;
+  var logged_in;
+  var email;
+  if (req.session.user) {
+   logged_in = true;
+   email = req.session.user.email;
+   userId = req.session.user.id;
+  }
   // Select from beers db WHERE user_id = user logged in AND liked = true
   db.many(
-    "SELECT * FROM beers WHERE liked = 'true'"
+    "SELECT * FROM beers WHERE user_id = $1 AND liked = 'true'", [userId]
   ).then(function(data) {
     res.render('specific_beers', {"beers": data});
   })
@@ -132,9 +149,17 @@ app.get('/beers/liked', function(req,res) {
 
 // Makes User's Liked Beers List
 app.get('/beers/disliked', function(req,res) {
+  var userId;
+  var logged_in;
+  var email;
+  if (req.session.user) {
+   logged_in = true;
+   email = req.session.user.email;
+   userId = req.session.user.id;
+  }
   // Select from beers db WHERE user_id = user logged in AND liked = false
   db.many(
-    "SELECT * FROM beers WHERE liked = 'false'"
+    "SELECT * FROM beers WHERE user_id = $1 AND liked = 'false'", [userId]
   ).then(function(data) {
     res.render('specific_beers', {"beers": data});
   })
@@ -144,29 +169,6 @@ app.get('/beers/disliked', function(req,res) {
 app.get('/beers/name', function(req,res) {
   res.render('beer_info')
 })
-
-
-//MARCELA'S EXAMPLE
-// app.post("/save", function(req, res) {
-//  // get user's id,
-//  var userId;
-//  var logged_in;
-//  var email;
-//  if (req.session.user) {
-//    logged_in = true;
-//    email = req.session.user.email;
-//    userId = req.session.user.id;
-//  }
-
-//  var title = req.body.title;
-//    db.none(
-//      "INSERT INTO articles (title, user_id) VALUES ($1, $2)", [title, userId]
-//    ).then(function() {
-//      res.render('favorites/index');
-//    })
-//  // redirect to /favorites/user_id
-
-// });
 
 // Adds Beer Info into beers database
 //get the data from the saveBeer function on the front end
