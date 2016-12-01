@@ -36,9 +36,11 @@ app.use(session({
 app.get("/", function(req, res){
   var logged_in;
   var email;
+  var userId;
   if(req.session.user){
     logged_in = true;
     email = req.session.user.email;
+    userId = req.session.user.id;
   }
   var data = {
     "logged_in": logged_in,
@@ -88,14 +90,34 @@ app.post('/login', function(req, res){
     });
   });
 });
+// // Logs current user out
+// app.post('/logout', function(req, res){
+//   var data = req.body;
+//   console.log(data)
+//   db.one(
+//     "SELECT * FROM users WHERE email = $1",
+//     [data.email]
+//   ).catch(function(){
+//     res.send('Email/Password not found.')
+//   }).then(function(user){
+//     bcrypt.compare(data.password, user.password_digest, function(err, cmp){
+//       if(cmp){
+//         req.session.user = user;
+//         res.redirect('/beers');
+//       } else {
+//         res.send('Email/Password not found.')
+//       }
+//     });
+//   });
+// });
 
 // Makes User's Saved Beers List
 app.get('/beers', function(req,res) {
-  db.many(
-    "SELECT * FROM beers"
-  ).then(function(data) {
-    res.render('beers', {"beers": data});
-  })
+  // db.many(
+  //   "SELECT * FROM beers WHERE user_id = $1", [userId]
+  // ).then(function(data) {
+    res.render('beers');
+  // })
 });
 
 // Makes User's Liked Beers List
@@ -124,33 +146,52 @@ app.get('/beers/name', function(req,res) {
 })
 
 
+//MARCELA'S EXAMPLE
+// app.post("/save", function(req, res) {
+//  // get user's id,
+//  var userId;
+//  var logged_in;
+//  var email;
+//  if (req.session.user) {
+//    logged_in = true;
+//    email = req.session.user.email;
+//    userId = req.session.user.id;
+//  }
+
+//  var title = req.body.title;
+//    db.none(
+//      "INSERT INTO articles (title, user_id) VALUES ($1, $2)", [title, userId]
+//    ).then(function() {
+//      res.render('favorites/index');
+//    })
+//  // redirect to /favorites/user_id
+
+// });
 
 // Adds Beer Info into beers database
 //get the data from the saveBeer function on the front end
 //put it into the database with INSERT INTO
 app.post('/beers/search', function(req,res) {
   var data = req.body;
-
+  var userId;
+  var logged_in;
+  var email;
+  if (req.session.user) {
+   logged_in = true;
+   email = req.session.user.email;
+   userId = req.session.user.id;
+  }
   //^^^ this is the data from the front end
-  // console.log(data.name);
-  // console.log(data.brewery);
-  // console.log(data.description)
-  // console.log(data.liked)
-  // res.send(data.liked)
-  // data.abv = Number(data.abv)
-  console.log(data.liked);
-  // data.abv = Number(data.abv)
-  // console.log(typeof(data.abv))
-
+  console.log(userId);
 
   db.none(
-    'INSERT INTO beers (name, brewery, img_url, description, abv, liked) VALUES ($1, $2, $3, $4, $5, $6)', [data.name, data.brewery, data.img_url, data.description, data.abv, data.liked]
+    'INSERT INTO beers (name, brewery, img_url, description, abv, liked, user_id) VALUES ($1, $2, $3, $4, $5, $6, $7)', [data.name, data.brewery, data.img_url, data.description, data.abv, data.liked, userId]
   )
   .catch(function() {
     res.send('Error.')
   })
   .then(function() {
-    res.send('Beer Saved!')
+    res.redirect('search')
   })
 })
 
