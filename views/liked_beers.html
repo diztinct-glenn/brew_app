@@ -22,9 +22,10 @@
           <p>{{name}}</p>
           <p>{{description}}</p>
           <p>ABV: {{abv}}%</p>
-          <!-- <p>Had a change of heart? <a class='d-inline' href="" title="">Switch my taste</a></p> -->
-          <form method="POST" action="/beers/liked/{{id}}?_method=PUT">
+          <p>Had a change of heart?</p>
+          <form method="POST" action="/update/liked/{{id}}?_method=PUT">
             <input name="id" type="hidden" value="{{id}}">
+            <button type="submit" value="submit" class="btn btn-default btn-lg">Change preference</button>
           </form>
           <form method="POST" action="/delete/{{id}}?_method=DELETE">
              <input name="id" type="hidden" value={{id}}>
