@@ -10,10 +10,12 @@
   <div class="main-container">
       <h1 class='text-xs-center text-lg-center'>youBREW</h1>
       <div class ='col-lg-2'>
-        <h2>All Your Beers:</h2>
+        <h2>Disliked Beers:</h2>
+        <a href="/beers/search" title="Search Beers" class='d-block'>Search Beers</a>
         <a href="/beers" title="All Beers" class='d-block'>All Beers</a>
         <a href="/beers/liked" title="Liked Beers" class='d-block'>Liked Beers</a>
         <a href="/beers/disliked" title="Disliked Beers" class='d-block'>Disliked Beers</a>
+        <a href="/logout" title="Logout" class='d-block'>Logout</a>
       </div>
 
       <div class="col-lg-8 shadow_box">
@@ -22,14 +24,15 @@
           <p class='text-xs-center text-lg-center'>{{name}}</p>
           <p class='text-xs-center text-lg-center'>{{description}}</p>
           <p class='text-xs-center text-lg-center'>ABV: {{abv}}%</p>
-          <p>Had a change of heart?</p>
+          <p class='text-xs-center text-lg-center'>Had a change of heart?</p>
           <form method="POST" action="/update/disliked/{{id}}?_method=PUT">
             <input name="id" type="hidden" value="{{id}}">
+            <button type="submit" value="submit" class="btn btn-default btn-lg btn-warning mx-auto d-block">Change Preference</button>
           </form>
           <br>
           <form method="POST" action="/delete/{{id}}?_method=DELETE">
              <input name="id" type="hidden" value={{id}}>
-             <button type="submit" value="submit" class="btn btn-default btn-lg mx-auto d-block">Delete</button>
+             <button type="submit" value="submit" class="btn btn-default btn-lg btn-danger mx-auto d-block">Delete</button>
           </form>
           <br>
         {{/beers}}
